@@ -149,7 +149,7 @@ export async function msgIntentDetect(msg, payload) {
  * @param payload 一些附加状态
  * @returns 意图
  */
-async function textIntentDetect(msg, payload) {
+export async function textIntentDetect(msg, payload) {
     let text = msg.text()
 
     // 去掉可能的 @xxx
