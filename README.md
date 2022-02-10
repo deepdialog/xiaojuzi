@@ -168,6 +168,14 @@ docker run -d --restart=always --name=image-caption -p 10970:8000 qhduan/image-c
 docker run -d -p 61111:81 tianrking/fastapi_sts:v0.4
 ```
 
+可用测试
+- curl -X GET "127.0.0.1:61111/sts/text"
+- curl -X POST -k "127.0.0.1:61111/api/sts/" -H 'Content-Type: application/json' -d'
+{
+    "text": "ok"
+}
+'
+
 #### old version 
 端口：10950
 
