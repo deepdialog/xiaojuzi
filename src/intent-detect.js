@@ -8,6 +8,8 @@
 import { bot } from './bot.js'
 import { queryIntent } from './intent-query-detect.js'
 import moment from 'moment'
+import fs from 'fs'
+import fetch from 'node-fetch'
 
 /**
  * 消息意图识别，识别后的意图会提交给policy
@@ -116,12 +118,36 @@ export async function msgIntentDetect(msg, payload) {
     if ([
         bot.Message.Type.Audio
     ].includes(msg.type())) {
-        console.log(msg.text);
-        const fileBox = await msg.toFileBox()
+        //console.log(msg.text);
+        // const fileBox = await msg.toFileBox()
+        // return {
+        //     ...payload,
+        //     intent: 'file',
+        //     file: fileBox,
+        // }
+ 
+        const url = 'http://0.0.0.0:61113' //asr server
+        const audioFileBox = await msg.toFileBox()
+        const audio_dir = audioFileBox.name
+        await audioFileBox.toFile(audioFileBox.name, true)
+        const body = {
+            lol: '1',
+            audio_name: audioFileBox.name,
+            audio_data: "data:audio/silk;base64," + fs.readFileSync(audio_dir, 'base64')
+        };
+        const response = await fetch(url + '/api/audio/', {
+            body: JSON.stringify(body),
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json()
+        msg.say(JSON.stringify(data)); // eslint-disable-line
+       
+        fs.unlinkSync(audio_dir);
         return {
             ...payload,
             intent: 'file',
-            file: fileBox,
+            file: audioFileBox,
         }
     }
 

@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { textVector } from '../../src/components/text-to-vector/index.js' //测试
 import Mocha from 'mocha'
 var describe = Mocha.describe
