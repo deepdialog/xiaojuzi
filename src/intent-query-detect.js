@@ -7,7 +7,8 @@ import process from 'process'
 import { textVector } from './components/text-to-vector/index.js'
 
 
-const INDEX = process.env.ES_INDEX || 'juzibot-intent'
+// const INDEX = process.env.ES_INDEX || 'juzibot-intent'
+const INDEX = process.env.ES_INDEX || 'idontknow-intent' // change model
 const client = new Client({
     node: process.env.ES_ADDR || 'https://admin:admin@localhost:9200/',
     ssl: {

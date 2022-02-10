@@ -15,7 +15,7 @@ const URL = process.env.TEXT_VECTOR || 'http://localhost:10950/api/encode'
 export async function textVector(text) {
     const res = await fetch(URL, {
         method: 'POST',
-        headers: {'ContentType': 'application/json'},
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({ text }),
     })
     const json = await res.json()
