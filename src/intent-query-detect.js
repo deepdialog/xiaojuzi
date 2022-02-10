@@ -8,13 +8,38 @@ import { textVector } from './components/text-to-vector/index.js'
 
 
 // const INDEX = process.env.ES_INDEX || 'juzibot-intent'
-const INDEX = process.env.ES_INDEX || 'idontknow-intent' // change model
+const INDEX =  'idontknow-intent'
+
 const client = new Client({
     node: process.env.ES_ADDR || 'https://admin:admin@localhost:9200/',
     ssl: {
         rejectUnauthorized: false,
     },
 })
+
+/////// create index
+async function search() {
+    // Create an index with non-default settings.
+    var index_name = "idontknow-intent";
+    var settings = {
+        settings: {
+            index: {
+                number_of_shards: 4,
+                number_of_replicas: 3,
+            },
+        },
+    };
+
+    var response = await client.indices.create({
+        index: index_name,
+        body: settings,
+    });
+
+    console.log("Creating index:");
+    console.log(response.body);
+}
+//search()
+/////// create index end
 
 /**
  * 删除一个id
@@ -153,7 +178,7 @@ export async function queryIntent(text, belong='general', threshold=0.8, k=3) {
             }
         })
     } catch(e) {
-        console.error(e)
+       console.error(e)
     }
     
     //console.log('intent-vector-query', results)
