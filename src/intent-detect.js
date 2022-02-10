@@ -90,8 +90,6 @@ export async function msgIntentDetect(msg, payload) {
         bot.Message.Type.Image,
     ].includes(msg.type())) {
         const fileBox = await msg.toFileBox()
-
-
         return {
             ...payload,
             intent: 'file',
@@ -118,14 +116,6 @@ export async function msgIntentDetect(msg, payload) {
     if ([
         bot.Message.Type.Audio
     ].includes(msg.type())) {
-        //console.log(msg.text);
-        // const fileBox = await msg.toFileBox()
-        // return {
-        //     ...payload,
-        //     intent: 'file',
-        //     file: fileBox,
-        // }
- 
         const url = 'http://0.0.0.0:61113' //asr server
         const audioFileBox = await msg.toFileBox()
         const audio_dir = audioFileBox.name
@@ -141,7 +131,7 @@ export async function msgIntentDetect(msg, payload) {
             headers: { 'Content-Type': 'application/json' }
         });
         const data = await response.json()
-        msg.say(JSON.stringify(data)); // eslint-disable-line
+        msg.say(JSON.stringify(data));
        
         fs.unlinkSync(audio_dir);
         return {
