@@ -112,7 +112,7 @@ export async function msgIntentDetect(msg, payload) {
             description: urlLink.description(),
         }
     }
-    // TODO: 语音
+    //语音转文字
     if ([
         bot.Message.Type.Audio
     ].includes(msg.type())) {
