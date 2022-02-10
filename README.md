@@ -161,10 +161,25 @@ docker run -d --restart=always --name=image-caption -p 10970:8000 qhduan/image-c
 
 ### 文字向量服务
 
+#### new version 
+端口：61111
+
+```bash
+docker run -d -p 61111:81 tianrking/fastapi_sts:v0.4
+```
+
+#### old version 
 端口：10950
 
 ```bash
 docker run -d --restart=always --name=onnx-cpm-sts -p 10950:8000 qhduan/onnx-cpm-sts:0.1
+```
+
+### 语音转文字服务
+端口 
+
+```bash
+docker run -d -p 61113:81 tianrking/fastapi_asr:v0.2
 ```
 
 ### 浏览器
@@ -289,7 +304,6 @@ curl -X PUT -k "https://admin:admin@localhost:9200/juzibot-intent?pretty" -H 'Co
 
 
 ```
-
 
 ## 其他操作
 
