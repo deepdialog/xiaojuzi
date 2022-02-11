@@ -165,7 +165,7 @@ docker run -d --restart=always --name=image-caption -p 10970:8000 qhduan/image-c
 端口：61111
 
 ```bash
-docker run -d -p 61111:81 tianrking/fastapi_sts:v0.4
+docker run -d --restart=always --name sts -p 61111:81 tianrking/fastapi_sts:v0.4
 ```
 
 可用测试
