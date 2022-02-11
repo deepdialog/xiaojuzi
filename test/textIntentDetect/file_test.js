@@ -1,8 +1,6 @@
 import assert from 'assert'
 import { textIntentDetect } from '../../src/intent-detect.js' //测试
-import mocha from 'mocha'
-var describe = mocha.describe
-var it = mocha.it
+import { describe, it } from 'mocha'
 
 describe('myfile_test.js 👋',() => {
     
