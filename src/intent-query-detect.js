@@ -106,7 +106,13 @@ export async function loadExistsIntent() {
  * @returns 相似度大于阈值的意图或者空
  */
 export async function queryIntent(text, belong='general', threshold=0.8, k=3) {
-    const vector = await textVector(text)
+    let vector
+    try {
+        vector = await textVector(text)
+    } catch (e) {
+        console.warn('intent-query-detect.queryIntent: text vector not work')
+        return null
+    }
     const body = {
         _source: ['intent', 'text'],
         query: {
@@ -135,10 +141,7 @@ export async function queryIntent(text, belong='general', threshold=0.8, k=3) {
         index: INDEX,
         body,
     })
-    
-    
-    //console.log('intent-vector-query', rets.body.hits.hits)
-    
+
     let results = []
     try {
         results = rets.body.hits.hits.map(item => {
