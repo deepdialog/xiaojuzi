@@ -8,6 +8,8 @@
 import { bot } from './bot.js'
 import { queryIntent } from './intent-query-detect.js'
 import moment from 'moment'
+import fs from 'fs'
+import fetch from 'node-fetch'
 
 /**
  * 消息意图识别，识别后的意图会提交给policy
@@ -67,13 +69,14 @@ export async function intentDetect(msg) {
  * @returns 一个包含意图的结构体
  */
 export async function msgIntentDetect(msg, payload) {
-
+    
     // https://wechaty.js.org/docs/api/message/#messagetype--messagetype
 
     // 文件意图保存
     if ([
         bot.Message.Type.Attachment,  // 包括文档
     ].includes(msg.type())) {
+
         const fileBox = await msg.toFileBox()
         return {
             ...payload,
@@ -109,16 +112,31 @@ export async function msgIntentDetect(msg, payload) {
             description: urlLink.description(),
         }
     }
-    // TODO: 语音
+    //语音转文字
     if ([
         bot.Message.Type.Audio
     ].includes(msg.type())) {
-        console.log(msg.text);
-        const fileBox = await msg.toFileBox()
+        const url = 'http://0.0.0.0:61113' //asr server
+        const audioFileBox = await msg.toFileBox()
+        const audio_dir = audioFileBox.name
+        await audioFileBox.toFile(audioFileBox.name, true)
+        const body = {
+            audio_name: audioFileBox.name,
+            audio_data: "data:audio/silk;base64," + fs.readFileSync(audio_dir, 'base64')
+        };
+        const response = await fetch(url + '/api/audio/', {
+            body: JSON.stringify(body),
+            method: 'post',
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await response.json()
+        msg.say(JSON.stringify(data));
+       
+        fs.unlinkSync(audio_dir);
         return {
             ...payload,
             intent: 'file',
-            file: fileBox,
+            file: audioFileBox,
         }
     }
 
@@ -238,7 +256,7 @@ export async function textIntentDetect(msg, payload) {
         }
     }
 
-    m = text.match(/^(我的文件|列出文件|群文件)$/)
+    m = text.match(/^(我的文件|列出文件|群文件).*$/)
     if (m) {
         return {
             ...payload,
