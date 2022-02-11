@@ -161,11 +161,38 @@ docker run -d --restart=always --name=image-caption -p 10970:8000 qhduan/image-c
 
 ### 文字向量服务
 
+#### new version 
+端口：61111
+
+```bash
+docker run -d --restart=always --name sts -p 61111:81 tianrking/fastapi_sts:v0.4
+```
+
+可用测试
+- curl -X GET "127.0.0.1:61111/sts/text"
+- curl -X POST -k "127.0.0.1:61111/api/sts/" -H 'Content-Type: application/json' -d'
+{
+    "text": "ok"
+}
+'
+
+- 内存占用 : 1.5GiB
+
+#### old version 
 端口：10950
 
 ```bash
 docker run -d --restart=always --name=onnx-cpm-sts -p 10950:8000 qhduan/onnx-cpm-sts:0.1
 ```
+
+### 语音转文字服务
+
+端口 
+
+```bash
+docker run -d --restart=always --name asr -p 61113:81 tianrking/fastapi_asr:v0.3
+```
+- 内存占用 : 3.1GiB
 
 ### 浏览器
 
@@ -289,7 +316,6 @@ curl -X PUT -k "https://admin:admin@localhost:9200/juzibot-intent?pretty" -H 'Co
 
 
 ```
-
 
 ## 其他操作
 
