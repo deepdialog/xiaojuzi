@@ -1,8 +1,6 @@
 // import assert from 'assert'
 // import { recognizeTodo } from '../../src/components/text-recognizers/index.js' //测试
-// import Mocha from 'mocha'
-// var describe = Mocha.describe
-// var it = Mocha.it
+// import { describe, it } from 'mocha'
 
 // describe('test_recognizeTodo.js 👋',() => {
     
