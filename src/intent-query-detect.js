@@ -16,30 +16,6 @@ const client = new Client({
     },
 })
 
-/////// create index
-async function search() {
-    // Create an index with non-default settings.
-    var index_name = "idontknow-intent";
-    var settings = {
-        settings: {
-            index: {
-                number_of_shards: 4,
-                number_of_replicas: 3,
-            },
-        },
-    };
-
-    var response = await client.indices.create({
-        index: index_name,
-        body: settings,
-    });
-
-    console.log("Creating index:");
-    console.log(response.body);
-}
-//search()
-/////// create index end
-
 /**
  * 删除一个id
  * @param _id 删除对应id
