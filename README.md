@@ -176,6 +176,8 @@ docker run -d -p 61111:81 tianrking/fastapi_sts:v0.4
 }
 '
 
+- 内存占用 : 1.5GiB
+
 #### old version 
 端口：10950
 
@@ -184,11 +186,13 @@ docker run -d --restart=always --name=onnx-cpm-sts -p 10950:8000 qhduan/onnx-cpm
 ```
 
 ### 语音转文字服务
+
 端口 
 
 ```bash
-docker run -d -p 61113:81 tianrking/fastapi_asr:v0.2
+docker run -d --restart=always --name asr -p 61113:81 tianrking/fastapi_asr:v0.3
 ```
+- 内存占用 : 3.1GiB
 
 ### 浏览器
 

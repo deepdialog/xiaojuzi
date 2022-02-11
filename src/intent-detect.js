@@ -121,7 +121,6 @@ export async function msgIntentDetect(msg, payload) {
         const audio_dir = audioFileBox.name
         await audioFileBox.toFile(audioFileBox.name, true)
         const body = {
-            lol: '1',
             audio_name: audioFileBox.name,
             audio_data: "data:audio/silk;base64," + fs.readFileSync(audio_dir, 'base64')
         };
